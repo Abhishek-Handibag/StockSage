@@ -42,37 +42,38 @@ def google_search_action(query: str) -> dict:
 #     print('web_scraper_response:', json.dumps(response, indent=2))
 #     return response
 
-query_optimizer_agent = LlmAgent(
+optimizer_agent = LlmAgent(
     model='gemini-2.5-flash',
-    name='query_optimizer_agent',
-    description='An agent that refines user queries for Google search and synthesizes the final answer. You may be called multiple times in a loop, receiving updated queries or results.',
+    name='optimizer_agent',
+    description='An agent that synthesizes gathered information into a comprehensive answer for the user. You receive data from the data_gatherer_agent and provide optimized answers.',
     instruction=(
-        "You are a query optimizer. Your job is to iteratively refine the user's query for a better Google search experience. "
-        "You may receive updated queries or search results in a loop, and should synthesize a final answer to the user's original query, "
-        "taking into account new information from each iteration. Avoid redundant actions and build on previous results."
+        "You are an answer synthesizer. Your job is to take the information gathered by the data_gatherer_agent and provide a clear, comprehensive, and optimized answer to the user's original question. "
+        "Review the gathered data, extract the most relevant information, and present it in a well-structured and easy-to-understand format. "
+        "You may be called multiple times in a loop if more information is needed. In such cases, refine your answer based on new data."
     ),
 )
 
 data_gatherer_agent = LlmAgent(
     model='gemini-2.5-flash',
     name='data_gatherer_agent',
-    description='An agent that gathers data from Google search and scrapes the content of the links. You may be called repeatedly in a loop, receiving updated queries or instructions.',
+    description='An agent that gathers data from Google search based on user questions. You search for information and provide comprehensive data to the optimizer_agent.',
     instruction=(
-        "You are a data gatherer. Your job is to use the provided query to search Google and provide comprehensive information based on the search results. "
-        "Summarize and include in your response a structured list of the links with their title, snippet, and url. "
-        "You may be called multiple times in a loop, and should update your data gathering based on new queries or instructions. "
-        "Avoid repeating work unnecessarily and build on previous iterations."
+        "You are a data gatherer. Your job is to take the user's question and search Google for relevant information. "
+        "Search Google using the user's question (or an optimized version of it) and gather comprehensive information. "
+        "Provide detailed search results including titles, snippets, and URLs in a structured format. "
+        "You may be called multiple times if the optimizer_agent needs more specific information. "
+        "Focus on gathering accurate and relevant data from reliable sources."
     ),
-    tools=[google_search_action],  # scrape_links_action commented out for now
+    tools=[google_search_action],
 )
 
 search_and_scrape_sequence = SequentialAgent(
     sub_agents=[
-        query_optimizer_agent,
         data_gatherer_agent,
+        optimizer_agent,
     ],
     name='search_and_scrape_sequence',
-    description='A sequence of agents that searches Google and scrapes the results. This sequence may run iteratively in a loop, refining queries and gathering data across multiple passes.',
+    description='A sequence where data_gatherer_agent first searches for information, then optimizer_agent synthesizes an optimized answer. This sequence may run iteratively in a loop, gathering additional data and refining answers across multiple passes.',
 )
 
 root_agent = LoopAgent(

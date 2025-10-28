@@ -6,10 +6,12 @@ Defines agent assembly for query optimization, Google search, and web scraping u
 from google.adk.agents import SequentialAgent, LlmAgent, LoopAgent
 from .tools import get_google_search_tool, scrape_links
 # from .tools import scrape_links  # Commented out for now - web scraper functionality
+from pathlib import Path
 from dotenv import load_dotenv
 import json
 
-load_dotenv()
+root_dir = Path(__file__).parent.parent
+load_dotenv(dotenv_path=root_dir / '.env')
 
 search_tool = get_google_search_tool()
 

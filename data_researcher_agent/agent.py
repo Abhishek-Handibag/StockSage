@@ -1,10 +1,12 @@
 import os
+from pathlib import Path
 from dotenv import load_dotenv
 from google.adk.agents.llm_agent import Agent
 from google.adk.tools import FunctionTool
 from google.adk.tools.mcp_tool import MCPToolset, StreamableHTTPConnectionParams
 
-load_dotenv()
+root_dir = Path(__file__).parent.parent
+load_dotenv(dotenv_path=root_dir / '.env')
 api_key = os.getenv("STOCK_MARKET_API")
 
 root_agent = Agent(

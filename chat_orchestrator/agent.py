@@ -21,7 +21,8 @@ if parent_dir not in sys.path:
 from data_researcher_agent.agent import root_agent as data_researcher_agent
 from web_intelligence_agent.agent import root_agent as web_intelligence_agent
 
-load_dotenv()
+root_dir = Path(__file__).parent.parent
+load_dotenv(dotenv_path=root_dir / '.env')
 
 # Router agent - decides which specialized agent(s) to use
 router_agent = LlmAgent(

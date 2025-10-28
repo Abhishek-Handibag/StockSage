@@ -5,9 +5,11 @@ Provides GoogleSearchTool and initializer for custom web search.
 import os
 import logging
 import requests
+from pathlib import Path
 from dotenv import load_dotenv
 
-load_dotenv()
+root_dir = Path(__file__).parent.parent
+load_dotenv(dotenv_path=root_dir / '.env')
 logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO)
 

@@ -147,7 +147,7 @@ app = FastAPI(
     redoc_url="/redoc",
     contact={
         "name": "Abhishek Handibag",
-        "url": "https://github.com/Abhishek-Handibag/LangGraph_Project",
+        "url": "https://github.com/Abhishek-Handibag/StockSage",
     },
     license_info={
         "name": "MIT",

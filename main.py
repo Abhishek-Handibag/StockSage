@@ -132,15 +132,9 @@ class RootResponse(BaseModel):
 
 # --- Initialize FastAPI App ---
 app = FastAPI(
-    title="Multi-Agent Chat Orchestrator API",
+    title="StockSage : Multi-Agent Chat Orchestrator API",
     description="""
-    Intelligent multi-agent system for financial research and web intelligence.
-    
-    This API orchestrates specialized AI agents:
-    - **Financial Data Researcher**: Stock prices, market data, technical analysis
-    - **Web Intelligence**: Current news, web search, general information
-    
-    The coordinator automatically routes queries to the appropriate specialist agent.
+    Intelligent multi-agent system for financial research and web intelligence
     """,
     version="1.0.0",
     docs_url="/docs",

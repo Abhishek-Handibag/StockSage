@@ -1,23 +1,33 @@
 """
-FastAPI Backend for Multi-Agent Chat Orchestrator
+FastAPI Backend for Multi-Agent Chat Orchestrator.
 
-This module provides a REST API for interacting with an intelligent multi-agent system
-powered by Google's Agent Development Kit (ADK). The orchestrator routes user queries
-to specialized agents (financial data researcher and web intelligence) based on query content.
+This module implements a RESTful API for interacting with an intelligent 
+multi-agent system powered by Google's Agent Development Kit (ADK). 
+The orchestrator dynamically routes user queries to specialized agents, 
+such as financial data researchers or web intelligence agents, 
+based on the content and context of the query.
 
 Architecture:
-    - chat_orchestrator: Main coordinator using LLM-driven delegation pattern
-    - data_researcher_agent: Specialized in financial market data and analysis
-    - web_intelligence_agent: Specialized in web search and current events
+    - chat_orchestrator: Acts as the central coordinator using an 
+      LLM-driven delegation pattern to route user queries.
+    - data_researcher_agent: Specialized in financial market data 
+      collection, analysis, and research.
+    - web_intelligence_agent: Focused on web-based intelligence, 
+      search, and real-time event insights.
 
 API Endpoints:
-    - GET  /           : Root endpoint with API information
-    - GET  /health     : Health check endpoint
-    - POST /chat       : Main chat endpoint for user queries
+    - GET  /           : Returns API information and metadata.
+    - GET  /health     : Performs a system health check.
+    - POST /chat       : Handles user queries and coordinates 
+      agent responses.
 
-Author: Abhishek Handibag
-Version: 1.0.0
+Author:
+    Abhishek Handibag
+
+Version:
+    1.0.0
 """
+
 
 import uvicorn
 import sys
